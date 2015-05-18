@@ -1,0 +1,107 @@
+	<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="map_hover.js"></script>
+		<style>
+		body{
+			margin:0;
+			background-color: black;
+		}
+			
+.demo1{
+	width:1100px;
+	margin-left: auto;
+  margin-right: auto;
+}
+img{
+	position: absolute;
+	
+	margin-left: auto;
+  margin-right: auto;
+  left: 0;
+right: 0;
+top:100px;
+}
+
+		</style>
+	</head>
+	<body>
+		<div class="demo1">
+			<img src="che.svg"width="420"alt="">
+			
+		</div>
+		
+		
+	</body>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script>
+		var nothing;
+		
+		var randomRGB = Math.floor((Math.random() * 255));
+		
+
+		function my(){
+			nothing = setInterval(randomFunc1,2500);
+			nothing = setInterval(randomFunc2,5000);
+		};
+		function randomFunc1(){
+			randomY = Math.floor((Math.random() * 400) +1);
+		};
+		function randomFunc2(){
+			randomRGB = Math.floor((Math.random() * 255));
+		};
+		
+		my();
+		var dataset = [];
+		for(var i = 0;i<300;i++){
+			dataset.push(Math.floor((Math.random() * 20) + 50));
+		}
+		var svg = d3.select('.demo1').append('svg')
+					.attr('width',1100)
+					.attr('height',750)
+					.style('margin-right','auto')
+					.style('margin-left','auto');
+		
+		svg.selectAll("rect")
+		.data(dataset)
+		.enter()
+		.append("rect")
+		.attr('x',function(d,i){
+			return (i*10);
+		})
+		.attr('height',function(d){
+			return d*10;
+		})
+		.attr('y',0)
+		.attr('width',10)
+		.attr('fill',function(){
+			var r=randomRGB/*Math.floor((Math.random() * 256) + 1)*/;
+			var g=Math.floor((Math.random() * 256));
+			var b=Math.floor((Math.random() * 256));
+			return 'rgb('+r+','+g+','+b+')';
+		})
+		.on('mouseenter',function(d,i){
+			
+			d3.select(this)
+			.transition()
+			.duration(500)
+			/*.ease('bounce')*/
+			.delay(50)
+			.attr('fill',function(d,i){
+			var r=randomRGB/*Math.floor((Math.random() * 256) + 1)*/;
+			var g=Math.floor((Math.random() * 256));
+			var b=Math.floor((Math.random() * 256));
+			return 'rgb('+r+','+g+','+b+')';
+			})
+			.attr('height',function(){
+				return Math.floor((Math.random() * 20) +50)*10;
+			})
+			.attr('y',function(d,i){
+				return 0});
+
+		});
+		
+
+	</script>
+</html>
